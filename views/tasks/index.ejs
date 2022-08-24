@@ -22,14 +22,28 @@
 
 </form>
 <br>
-<div>
-    <% tasks.forEach(task => {%>
-        <a href="/tasks/<%= task.id %>">
-            <div>
-                <img height="150px" width="150px" src="<%= task.coverImagePah %>">
-                <br>
-                <%=task.title %> 
-            </div>   
-        </a> 
-    <% });%>
+<div class="todo">
+    <% var gName = '' %>
+    <% tasks.forEach(details => { %>
+        <% if ( details.machine.name !== gName) {%>
+            <h3><%=  details.machine.name %></h3> 
+            <ul class="todo-list">
+        <% } %>
+        <% if ( details.machine.name !== gName) {%>
+        </ul>
+        <% gName =  details.machine.name} %>
+            <li class="todo-list-item">
+            <div class="todo-list-item-name">
+                <%= details.content %> ;
+                <%= details.machine.name %> ;
+                <%= details.user.name %>
+            </div>
+            <a href="/tasks/<%= details._id %>/edit" class="edit">
+            <span class="fas fa-edit"></span>
+            </a>
+            <a href="/tasks/<%= details._id %>/delete" class="remove">
+            <span class="fas fa-times"></span>
+            </a>
+            </li>
+    <% }) %>
 </div>
