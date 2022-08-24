@@ -1,0 +1,35 @@
+<h2 class="page-header">Search Tasks</h2>
+<form action="/tasks" method="GET">
+    <div class="form-row">
+        <div class="form-item">
+            <label>Name</label>
+            <input type="text" name="title" value="<%= searchOptions.title %>">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-item">
+            <label>Published After</label>
+            <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>">
+        </div>
+        <div class="form-item">
+            <label>Published Before</label>
+            <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>">
+        </div>
+    </div>
+    <div class="form-row form-row-end">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+
+</form>
+<br>
+<div>
+    <% tasks.forEach(task => {%>
+        <a href="/tasks/<%= task.id %>">
+            <div>
+                <img height="150px" width="150px" src="<%= task.coverImagePah %>">
+                <br>
+                <%=task.title %> 
+            </div>   
+        </a> 
+    <% });%>
+</div>

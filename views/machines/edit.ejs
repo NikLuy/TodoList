@@ -1,0 +1,8 @@
+<h2 class="page-header">Edit Maschine</h2>
+<form action="/machines/<%= machine.id %>?_method=PUT" method="post">
+    <%- include('_form_fields')  %> 
+    <div class="form-row form-row-end btn-row">
+        <a class="btn btn-danger" href="/machines/<%= machine.id %>">Cancel</a>
+        <button class="btn btn-primary" type="submit">Edit</button>
+    </div>
+</form>

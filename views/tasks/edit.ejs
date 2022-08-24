@@ -1,0 +1,52 @@
+<div class="todo-container">
+    <h2>To-Do List</h2>
+    <div class="todo">
+    <form action="" method="POST" class="todo-header">
+    <input type="text" name="content">
+    <button type="submit"><span class="fas fa-plus"></span></button>
+    </form>
+    <ul class="todo-list">
+    <% task.forEach(details => { %>
+    <% if (details._id == idTask) { %>
+    <li class="todo-list-item">
+    <form action="/edit/<%= details._id %>" method="POST">
+        <div class="form-row">
+            <div class="form-item">
+                <label>Beschreibung</label>
+                <input type="text" name="content" value="<%= details.content%>">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-item">
+                <label>User</label>
+                <select name="user" >
+                <% users.forEach(user => { %>
+                    <option <% if (user.id === details.user) {%> selected <%}%> value="<%= user.id %>"><%= user.name %> </option>
+                <%  }); %>
+                </select>
+            </div>
+            <div class="form-item">
+                <label>Maschine</label>
+                <select name="machine" >
+                <% machines.forEach(machine => { %>
+                    <option <% if (machine.id === details.machine) {%> selected <%}%> value="<%= machine.id %>"><%= machine.name %> </option>
+                <%  }); %>
+                </select>
+            </div>
+        </div>
+    <button type="submit">Confirm</button>
+    <a href="/" class="cancel">Cancel</a>
+    </form>
+    </li>
+    <% } else { %>
+    <li class="todo-list-item">
+    <div class="todo-list-item-name"><%= details.content %></div>
+    <a href="/edit/<%= details._id %>" class="edit"> <span class="fas fa-edit"></span></a>
+    <a href="/remove/<%= details._id %>" class="remove"> <span class="fas fa-times"></span></a>
+    <a href="/check/<%= details._id %>" class="check"> <span class="fas fa-check"></span></a>
+    </li>
+    <% } %>
+    <% }) %>
+    </ul>
+    </div>
+</div>
