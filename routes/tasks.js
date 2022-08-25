@@ -3,15 +3,14 @@ const router = express.Router()
 const Task = require('../models/task')
 const User = require('../models/user')
 const Machines = require('../models/machine')
-const imageMineTypes = ['image/jpeg','image/png','image/gif']
 
 
 //All Task Route
 router.get('/', async (req,res)=>{
    let query = Task.find()
-   if(req.query.title != null && req.query.title != ''){
-      query = query.regex('title', new RegExp(req.query.title, 'i'))
-   }
+   // if(req.query.content != null && req.query.content != ''){
+   //    query = query.regex('content', new RegExp(req.query.title, 'i'))
+   // }
    if(req.query.publishedBefore != null && req.query.publishedBefore != ''){
       query = query.lte('date', req.query.publishedBefore)
    }
@@ -19,9 +18,16 @@ router.get('/', async (req,res)=>{
       query = query.gte('date', req.query.publishedAfter)
    }
    try {
-      const tasks = await query.exec()
+      const tasks = await query
+                              .populate('user')  
+                              .populate('machine')
+                              .exec()
+      let groupedTasks
+      groupedTasks = await getGroupArray(tasks);
+      console.log(groupedTasks);
       res.render('tasks/index',{
          tasks:tasks,
+         groupedTasks:groupedTasks,
          searchOptions:req.query
       })
    } catch (error) {
@@ -55,6 +61,7 @@ router.get('/:id', async (req,res)=>{
    try {
       const task = await Task.findById(req.params.id)
                               .populate('user')  
+                              .populate('machine')
                               .exec()
       res.render('tasks/show',{task:task})
    } catch (error) {
@@ -63,16 +70,6 @@ router.get('/:id', async (req,res)=>{
    }
 })
 
-// //Edit Task Route
-// router.get('/:id/edit',  async (req,res)=>{
-//    try {
-//       const task = await Task.findById(req.params.id)
-//       renderEditPage(res, task)
-//    } catch (error) {
-      
-//    }
-// })
-//Edit Task Route
 router.get('/:id/edit',  async (req,res)=>{
    try {
       const tasks = await Task.find({})
@@ -155,6 +152,36 @@ async function renderFormPage(res, task,form,id, hasError = false){
     } catch (error) {
       res.redirect('/tasks')
     }
+}
+
+// function groupArrayOfObjects(list, key) {
+//    return list.reduce(function(rv, x) {
+//      (rv[x[key]] = rv[x[key]] || []).push(x);
+//      return rv;
+//    }, {});
+//  };
+
+
+async function getGroupArray(mdata){
+   //this gives an object with dates as keys
+   console.log("demo")
+  const groups = mdata.reduce((groups, t) => {
+    const dateId= t.machine.id;
+    if (!groups[dateId]) {
+      groups[dateId] = [];
+    }
+    groups[dateId].push(t);
+    return groups;
+  }, {});
+  
+  // Edit: to add it in the array format instead
+  const groupArrays = Object.keys(groups).map((mid) => {
+    return {
+      mid:mid,
+      tasks: groups[mid]
+    };
+  });
+  return groupArrays 
 }
 
 module.exports = router
