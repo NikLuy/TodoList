@@ -1,49 +1,35 @@
 <h2 class="page-header">Search Tasks</h2>
-<form action="/tasks" method="GET">
+<form action="/" method="GET">
     <div class="form-row">
         <div class="form-item">
-            <label>Name</label>
-            <input type="text" name="title" value="<%= searchOptions.title %>">
+            <label>Task</label>
+            <input type="text" name="content" value="<%= searchOptions.content %>">
         </div>
     </div>
     <div class="form-row">
         <div class="form-item">
-            <label>Published After</label>
-            <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>">
+            <label>User</label>
+            <select name="userId" >
+                <option  value=""></option>
+            <% users.forEach(user => { %>
+                <option <% if (user.id === searchOptions.userId) {%> selected <%}%> value="<%= user.id %>"><%= user.name %> </option>
+            <%  }); %>
+            </select>
         </div>
         <div class="form-item">
-            <label>Published Before</label>
-            <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>">
+            <label>Maschine</label>
+            <select name="machineId" >
+                <option  value=""></option>
+            <% machines.forEach(machine => { %>
+                <option <% if (machine.id === searchOptions.machineId) {%> selected <%}%> value="<%= machine.id %>"><%= machine.name %> </option>
+            <%  }); %>
+            </select>
         </div>
     </div>
     <div class="form-row form-row-end">
         <button class="btn btn-primary" type="submit">Search</button>
     </div>
-
 </form>
+
 <br>
-<div class="todo">
-    <% var gName = '' %>
-    <% tasks.forEach(details => { %>
-        <% if ( details.machine.name !== gName) {%>
-            <h3><%=  details.machine.name %></h3> 
-            <ul class="todo-list">
-        <% } %>
-        <% if ( details.machine.name !== gName) {%>
-        </ul>
-        <% gName =  details.machine.name} %>
-            <li class="todo-list-item">
-            <div class="todo-list-item-name">
-                <%= details.content %> ;
-                <%= details.machine.name %> ;
-                <%= details.user.name %>
-            </div>
-            <a href="/tasks/<%= details._id %>/edit" class="edit">
-            <span class="fas fa-edit"></span>
-            </a>
-            <a href="/tasks/<%= details._id %>/delete" class="remove">
-            <span class="fas fa-times"></span>
-            </a>
-            </li>
-    <% }) %>
-</div>
+<%- include('../partials/groupedTasks.ejs')%>

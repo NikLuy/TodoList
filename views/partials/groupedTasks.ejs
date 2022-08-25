@@ -1,0 +1,6 @@
+<div class="todo">
+    <% groupedTasks.forEach(machine => { %>
+        <h3><%=  machine.tasks[0].machine.name %></h3> 
+        <%- include('tasks.ejs', {tasks:machine.tasks })%>
+    <% }) %>
+</div>

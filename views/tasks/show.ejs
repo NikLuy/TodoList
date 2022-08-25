@@ -4,7 +4,7 @@
 <div>User: <%= task.user.name %></div>
 <div>Machine: <%= task.machine.name  %></div>
 <div class="btn-row">
-    <a class="btn btn-primary" href="/tasks/<%= task.id %>/edit">Edit</a> 
+    <a class="btn btn-primary" href="/<%= task.id %>/edit">Edit</a> 
     <a class="btn btn-primary" href="/users/<%= task.user.id %>">View User</a>       
     <a class="btn btn-primary" href="/users/<%= task.machine.id %>">View Maschine</a>   
     <%- include('../partials/deleteForm.ejs', {url: `/tasks/${task.id}`}); %>

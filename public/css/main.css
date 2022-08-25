@@ -3,9 +3,10 @@
 @import 'shared/header.css';
 @import 'shared/buttons.css';
 @import 'shared/form.css';
+@import 'shared/bootstrap.min.css';
 
 :root{
-    font-family: 'Gotham Rounded';
+    font-family: 'Candal', sans-serif;
     font-size: 20px;
     color: var(--color-text-light);
 }
@@ -15,33 +16,23 @@
 }
 
 body{
-    background: linear-gradient(to right,var(--color-background-dark), var(--color-background-light));
+    /* background: linear-gradient(to right,var(--color-background-dark), var(--color-background-light)); */
+    background: #e27442;
 }
-
 .container{
     max-width: 1200px;
     margin: auto;
     margin-bottom: 3rem;
 }
-
 .inner-container{
     margin: 0 2rem;
 }
-
 .page-header{
     font-size: 2rem;
     font-weight: 500;
 }
 
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    }
-    body {
-    background: #e27442;
-    } */
-    .todo-container {
+.todo-container {
     color: white;
     position: absolute;
     top:50%;
@@ -54,23 +45,23 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    }
-    .todo {
-    width: 400px;
-    }
-    .todo-container h2 {
+}
+.todo {
+    min-width: 400px;
+}
+.todo-container h2 {
     padding: 10px;
     font-family: 'Candal', sans-serif;
     font-size: 2em;
-    }
-    .todo-header input {
+}
+.todo-header input {
     width: 92%;
     border: none;
     border-radius: 5px;
     height: 20px;
     font-family: 'Candal', sans-serif;
-    }
-    .todo-header button {
+}
+.todo-header button {
     color: white;
     border: none;
     border-radius: 50%;
@@ -78,11 +69,11 @@ body{
     padding: 5px;
     font-family: 'Candal', sans-serif;
     background-color: rgb(51, 212, 100);
-    }
-    .todo-container ul {
+}
+.todo-container ul {
     list-style: none;
-    }
-    .todo-list-item {
+}
+.todo-list-item {
     padding: 10px;
     margin-top: 10px;
     border: none;
@@ -91,19 +82,19 @@ body{
     background: rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: row;
-    }
-    .todo-list-item form {
+}
+.todo-list-item form {
     width: 100%;
     display: flex;
-    }
-    .todo-list-item input {
+}
+.todo-list-item input {
     flex-grow: 2;
     margin-right: 20px;
     border: none;
     border-radius: 5px;
     font-family: 'Candal', sans-serif;
-    }
-    .todo-list-item button {
+ }
+ .todo-list-item button {
     color: white;
     border: none;
     border-radius: 5px;
@@ -111,8 +102,8 @@ body{
     padding: 5px;
     font-family: 'Candal', sans-serif;
     background-color: rgb(51, 212, 100);
-    }
-    .todo-list-item .cancel {
+}
+.todo-list-item .cancel {
     color: white;
     text-decoration: none;
     border: none;
@@ -122,19 +113,19 @@ body{
     font-family: 'Candal', sans-serif;
     background-color: rgb(223, 43, 43);
     margin-left: 5px;
-    }
-    .todo-list-item div {
+}
+.todo-list-item div {
     flex-grow: 2;
-    }
-    .todo-list-item .edit {
+}
+.todo-list-item .edit {
     color : rgb(143, 233, 58);
     margin-right: 10px;
     cursor:pointer;
     text-decoration: none;
-    }
-    .todo-list-item .remove {
+}
+.todo-list-item .remove {
     color : rgb(243, 96, 96);
     margin-right: 5px;
     cursor:pointer;
     text-decoration: none;
-    }
+}

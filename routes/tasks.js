@@ -4,34 +4,39 @@ const Task = require('../models/task')
 const User = require('../models/user')
 const Machines = require('../models/machine')
 
-
 //All Task Route
 router.get('/', async (req,res)=>{
+   console.log(req.query )
    let query = Task.find()
-   // if(req.query.content != null && req.query.content != ''){
-   //    query = query.regex('content', new RegExp(req.query.title, 'i'))
-   // }
-   if(req.query.publishedBefore != null && req.query.publishedBefore != ''){
-      query = query.lte('date', req.query.publishedBefore)
+   if(req.query.content != null && req.query.content != ''){
+      query = query.regex('content', new RegExp(req.query.content, 'i'))
    }
-   if(req.query.publishedAfter!= null && req.query.publishedAfter != ''){
-      query = query.gte('date', req.query.publishedAfter)
+   if(req.query.userId  != null && req.query.userId  != '' ){
+      query = query.find({user:req.query.userId})
+   }
+   if(req.query.machineId  != null && req.query.machineId  != ''){
+      query = query.find({machine:req.query.machineId})
    }
    try {
       const tasks = await query
                               .populate('user')  
                               .populate('machine')
                               .exec()
-      let groupedTasks
-      groupedTasks = await getGroupArray(tasks);
-      console.log(groupedTasks);
-      res.render('tasks/index',{
-         tasks:tasks,
+      const groupedTasks = await getGroupArray(tasks);
+      let id
+      const users = await User.find({})
+      const machines  =await Machines.find({})
+      const params = {
          groupedTasks:groupedTasks,
-         searchOptions:req.query
-      })
+         searchOptions:req.query,
+         users:users,
+         machines:machines,
+         idTask: id,
+      }
+      res.render('tasks/index', params)
    } catch (error) {
-      //res.redirect('/')
+
+      res.redirect('/')
    }
 })
 
@@ -40,7 +45,7 @@ router.get('/new',  async (req,res)=>{
    renderNewPage(res, new Task())
 })
 
-//Create Task Route
+//Create new Task Route
 router.post('/', async (req,res)=>{
    const task = new Task({
       content : req.body.content,
@@ -86,18 +91,17 @@ router.put('/:id', async (req,res)=>{
    let id 
    let task
    try {
-      id = req.params.id
       tasks = Task.find({})
+      id = req.params.id
       task = await Task.findById(req.params.id)
       task.content = req.body.content,
       task.user= req.body.user,
       task.machine= req.body.machine
-   
       if(req.body.cover != null && req.body.cover != ''){
          saveCover(task, req.body.cover)
       }
       await task.save()
-      res.redirect(`/tasks/${task.id}`) 
+      res.redirect(`/${task.id}`) 
 
    }catch (error){
        console.log(error)
@@ -109,16 +113,20 @@ router.put('/:id', async (req,res)=>{
    }
 })
 
+router.put('/:id/checked', async (req,res)=>{
+      res.render("Set Checked") 
+})
+
 //Delete Task Route
 router.delete('/:id', async (req,res)=>{
    let task 
    try {
       task = await Task.findById(req.params.id)
       await task.remove()
-      res.redirect('/tasks')
+      res.redirect('/')
    } catch (error) {
       if(task != null){
-         res.render('tasks/show', {
+         res.render('/show', {
             task:task ,
             errorMessage: 'Could not remove task'
          })
@@ -150,21 +158,11 @@ async function renderFormPage(res, task,form,id, hasError = false){
       } 
       res.render(`tasks/${form}`, params)
     } catch (error) {
-      res.redirect('/tasks')
+      res.redirect('/')
     }
 }
-
-// function groupArrayOfObjects(list, key) {
-//    return list.reduce(function(rv, x) {
-//      (rv[x[key]] = rv[x[key]] || []).push(x);
-//      return rv;
-//    }, {});
-//  };
-
-
 async function getGroupArray(mdata){
    //this gives an object with dates as keys
-   console.log("demo")
   const groups = mdata.reduce((groups, t) => {
     const dateId= t.machine.id;
     if (!groups[dateId]) {
@@ -183,5 +181,4 @@ async function getGroupArray(mdata){
   });
   return groupArrays 
 }
-
 module.exports = router

@@ -1,18 +1,6 @@
 <div class="todo-container">
 <h2>To-Do List</h2>
 <div class="todo">
-<ul class="todo-list">
-    <% tasks.forEach(details => { %>
-    <li class="todo-list-item">
-    <div class="todo-list-item-name"><%= details.content %></div>
-    <a href="/tasks/<%= details._id %>/edit" class="edit">
-    <span class="fas fa-edit"></span>
-    </a>
-    <a href="/tasks/<%= details._id %>/delete" class="remove">
-    <span class="fas fa-times"></span>
-    </a>
-    </li>
-    <% }) %>
-    </ul>
+    <%- include('./partials/tasks.ejs')%>
 </div>
 </div>

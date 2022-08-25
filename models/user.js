@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const task = require('./task')
+const Task = require('../models/task')
 
 const userSchema = new mongoose.Schema({
     name:{
@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('remove', function(next){
-    task.find({user: this.id}, (err,tasks) => {
+    Task.find({user: this.id}, (err,tasks) => {
         if(err){
             next(err)
         }else if (tasks.length > 0){

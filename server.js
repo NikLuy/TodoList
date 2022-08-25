@@ -9,7 +9,7 @@ const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
-const indexRouter = require('./routes/index')
+// const indexRouter = require('./routes/index')
 const taskRouter = require('./routes/tasks')
 const machineRouter = require('./routes/machines')
 const userRouter = require('./routes/users')
@@ -29,9 +29,9 @@ const db = mongoose.connection
 db.on('error', error=> console.error(error))
 db.once('open', ()=> console.log('Connected to Mongoose'))
 
-app.use('/', indexRouter)
+// app.use('/', indexRouter)
 app.use('/machines', machineRouter)
 app.use('/users', userRouter)
-app.use('/tasks', taskRouter)
+app.use('/', taskRouter)
 
 app.listen(3000, () => console.log("Server Up and running"));

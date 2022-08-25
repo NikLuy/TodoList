@@ -1,0 +1,28 @@
+<ul class="todo-list">
+    <% tasks.forEach(details => { %>
+        <li class="todo-list-item">
+        <div class="row">
+            <div class="col-md-6">
+                <%= details.content %> ;
+            </div>
+            <div class="col-md-3">
+                <%= details.machine.name %> ;
+            </div>
+            <div class="col-md-2">
+                <%= details.user.name %>
+            </div>
+            <div class="col-md-1">
+                <a href="/tasks/<%= details._id %>/edit" class="edit">
+                    <span class="fas fa-edit"></span>
+                </a>
+                <a href="/tasks/<%= details._id %>/checked" class="edit">
+                    <span class="fas fa-check"></span>
+                </a>
+                <a href="/tasks/<%= details._id %>/delete" class="remove">
+                    <span class="fas fa-times"></span>
+                </a>
+            </div>
+        </div>
+        </li>
+        <% }) %>
+    </ul>
