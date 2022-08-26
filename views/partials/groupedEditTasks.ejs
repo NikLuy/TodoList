@@ -3,6 +3,6 @@
         <div class="machine-name">
             <h3><a href="machines/<%= machine.tasks[0].machine.id%>"><%=  machine.tasks[0].machine.name %></a> </h3> 
         </div>
-        <%- include('tasks.ejs', {tasks:machine.tasks })%>
+        <%- include('tasksEdit.ejs', {tasks:machine.tasks })%>
     <% }) %>
 </div>

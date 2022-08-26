@@ -1,35 +1,11 @@
 <h2 class="page-header">Search Tasks</h2>
-<form action="/" method="GET">
-    <div class="form-row">
-        <div class="form-item">
-            <label>Task</label>
-            <input type="text" name="content" value="<%= searchOptions.content %>">
+<div class="todo-list-item">
+    <form action="/" method="GET">
+        <%- include('../partials/tasksSearch.ejs')%>
+        <div class="form-row form-row-end">
+            <button class="btn btn-primary" type="submit">Search</button>
         </div>
-    </div>
-    <div class="form-row">
-        <div class="form-item">
-            <label>User</label>
-            <select name="userId" >
-                <option  value=""></option>
-            <% users.forEach(user => { %>
-                <option <% if (user.id === searchOptions.userId) {%> selected <%}%> value="<%= user.id %>"><%= user.name %> </option>
-            <%  }); %>
-            </select>
-        </div>
-        <div class="form-item">
-            <label>Maschine</label>
-            <select name="machineId" >
-                <option  value=""></option>
-            <% machines.forEach(machine => { %>
-                <option <% if (machine.id === searchOptions.machineId) {%> selected <%}%> value="<%= machine.id %>"><%= machine.name %> </option>
-            <%  }); %>
-            </select>
-        </div>
-    </div>
-    <div class="form-row form-row-end">
-        <button class="btn btn-primary" type="submit">Search</button>
-    </div>
-</form>
-
+    </form>
+</div>
 <br>
 <%- include('../partials/groupedTasks.ejs')%>

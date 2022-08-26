@@ -2,47 +2,26 @@ const express = require('express')
 const router = express.Router()
 const Task = require('../models/task')
 const User = require('../models/user')
+const TaskModule = require('../modules/taskModule')
 const Machines = require('../models/machine')
 
 //All Task Route
 router.get('/', async (req,res)=>{
-   console.log(req.query )
-   let query = Task.find()
-   if(req.query.content != null && req.query.content != ''){
-      query = query.regex('content', new RegExp(req.query.content, 'i'))
-   }
-   if(req.query.userId  != null && req.query.userId  != '' ){
-      query = query.find({user:req.query.userId})
-   }
-   if(req.query.machineId  != null && req.query.machineId  != ''){
-      query = query.find({machine:req.query.machineId})
-   }
-   try {
-      const tasks = await query
-                              .populate('user')  
-                              .populate('machine')
-                              .exec()
-      const groupedTasks = await getGroupArray(tasks);
-      let id
-      const users = await User.find({})
-      const machines  =await Machines.find({})
-      const params = {
-         groupedTasks:groupedTasks,
-         searchOptions:req.query,
-         users:users,
-         machines:machines,
-         idTask: id,
-      }
-      res.render('tasks/index', params)
-   } catch (error) {
-
-      res.redirect('/')
-   }
+try {
+   params = await TaskModule.renderPage(req);
+   res.render('tasks/index', params)
+} catch (error) {
+   res.redirect('/')
+}
 })
 
 //New Users Route
 router.get('/new',  async (req,res)=>{
    renderNewPage(res, new Task())
+})
+
+router.get('/:id/edit',  async (req,res)=>{
+   renderEditPage(res)
 })
 
 //Create new Task Route
@@ -54,34 +33,10 @@ router.post('/', async (req,res)=>{
    })
    try {
       const newTask = await task.save()
-      res.redirect(`/tasks/${newTask.id}`) 
+      res.redirect(`/`) 
    } catch (error) {
       warn(error)
       renderNewPage(res, new Task(), true)
-   }
-})
-
-//Show Task Route
-router.get('/:id', async (req,res)=>{
-   try {
-      const task = await Task.findById(req.params.id)
-                              .populate('user')  
-                              .populate('machine')
-                              .exec()
-      res.render('tasks/show',{task:task})
-   } catch (error) {
-      console.log(error)
-      res.redirect('/tasks')
-   }
-})
-
-router.get('/:id/edit',  async (req,res)=>{
-   try {
-      const tasks = await Task.find({})
-      const id = req.params.id
-      renderEditPage(res, tasks,id)
-   } catch (error) {
-      
    }
 })
 
@@ -101,21 +56,64 @@ router.put('/:id', async (req,res)=>{
          saveCover(task, req.body.cover)
       }
       await task.save()
-      res.redirect(`/${task.id}`) 
+
+      res.redirect(`/`) 
 
    }catch (error){
        console.log(error)
       if(task != null){
-         renderEditPage(res, tasks,id, true)
+         renderEditPage(res, true)
       }else{
          redirect('/')
       }
    }
 })
 
-router.put('/:id/checked', async (req,res)=>{
-      res.render("Set Checked") 
+
+router.post("/:id/check",async (req, res, next) => {
+   try {
+      const id = req.params.id;
+      const task =  await Task.findById(id);
+      await Task.findByIdAndUpdate(id, { done: !task.done });
+   res.redirect("/");
+   } catch (error) {
+      console.warn(error)
+      res.redirect("/");
+   }
+});
+
+//Create new Task Route
+router.post('/', async (req,res)=>{
+   const task = new Task({
+      content : req.body.content,
+      user: req.body.user,
+      machine: req.body.machine
+   })
+   try {
+      const newTask = await task.save()
+      res.redirect(`/`) 
+   } catch (error) {
+      warn(error)
+      renderNewPage(res, new Task(), true)
+   }
 })
+
+// //Show Task Route
+// router.get('/:id', async (req,res)=>{
+//    try {
+//       const task = await Task.findById(req.params.id)
+//                               .populate('user')  
+//                               .populate('machine')
+//                               .exec()
+//       res.render('tasks/show',{task:task})
+//    } catch (error) {
+//       console.log(error)
+//       res.redirect('/tasks')
+//    }
+// })
+
+
+
 
 //Delete Task Route
 router.delete('/:id', async (req,res)=>{
@@ -136,11 +134,18 @@ router.delete('/:id', async (req,res)=>{
    }
 })
 
+async function renderEditPage(res, hasError = false){
+   try {
+      if(hasError)console.log("Error while Uptadting")
+      params = await TaskModule.renderPage(req);
+      res.render('tasks/edit', params)
+   } catch (error) {
+      res.redirect('/')
+   }
+}
+
 async function renderNewPage(res, task, id, hasError = false){
    renderFormPage(res, task, "new" ,id,hasError)
-}
-async function renderEditPage(res, task, id, hasError = false){
-   renderFormPage(res, task, "edit",id,hasError)
 }
 async function renderFormPage(res, task,form,id, hasError = false){
    try {
@@ -160,25 +165,5 @@ async function renderFormPage(res, task,form,id, hasError = false){
     } catch (error) {
       res.redirect('/')
     }
-}
-async function getGroupArray(mdata){
-   //this gives an object with dates as keys
-  const groups = mdata.reduce((groups, t) => {
-    const dateId= t.machine.id;
-    if (!groups[dateId]) {
-      groups[dateId] = [];
-    }
-    groups[dateId].push(t);
-    return groups;
-  }, {});
-  
-  // Edit: to add it in the array format instead
-  const groupArrays = Object.keys(groups).map((mid) => {
-    return {
-      mid:mid,
-      tasks: groups[mid]
-    };
-  });
-  return groupArrays 
 }
 module.exports = router

@@ -1,0 +1,31 @@
+
+.user-row,
+.machine-row{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.user-name,
+.machine-name{
+    font-size: 1.5rem;
+}
+.machine-name a,
+.machine-name a:visited{
+    color: var(--color-text-light);
+}
+.machine-name a:hover{
+    text-decoration: none;
+}
+
+.task-done{
+    text-decoration: line-through;
+}
+.link-button { 
+    background: none;
+    border: none;
+    cursor: pointer; 
+}
+
+.display-none{
+    display: none;
+}

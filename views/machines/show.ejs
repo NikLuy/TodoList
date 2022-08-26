@@ -1,24 +1,2 @@
 <h2 class="page-header"><%= machine.name %></h2>
-<div class="btn-row">
-    <a class="btn btn-primary" href="/machines/<%= machine.id %>/edit">Edit</a>     
-    <%- include('../partials/deleteForm.ejs', {url: `/machines/${machine.id}`}); %>
-</div>
-<% if (tasksByMachine.length >0) { %>
-    <h3><%= machine.name %></h3>
-    <div>
-    <ul class="todo-list"></ul>
-    <% tasksByMachine.forEach(book => {%>
-        <li class="todo-list-item">
-            <div class="todo-list-item-name"><%= details.content %></div>
-            <a href="/edit/<%= details._id %>" class="edit">
-            <span class="fas fa-edit"></span>
-            </a>
-            <a href="/remove/<%= details._id %>" class="remove">
-            <span class="fas fa-times"></span>
-            </a>
-        </li>
-    <% });%>
-</ul>
-</div>
-
-<% } %>
+    <%- include('../partials/tasks.ejs')%>

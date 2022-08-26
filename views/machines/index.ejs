@@ -12,10 +12,12 @@
 </form>
 <br>
 <% machines.forEach(machine => {%>
-    <div><%=machine.name %> </div>  
-    <div class="btn-row">
-        <a class="btn btn-primary" href="/machines/<%= machine.id %>">View</a>  
-        <a class="btn btn-primary" href="/machines/<%= machine.id %>/edit">Edit</a>  
-        <%- include('../partials/deleteForm.ejs', {url: `/machines/${machine.id}`}); %>
+    <div class="machine-row">
+        <div class="machine-name"><%=machine.name %> </div>  
+        <div class="btn-row">
+            <a class="btn btn-primary" href="/machines/<%= machine.id %>">View</a>  
+            <a class="btn btn-primary" href="/machines/<%= machine.id %>/edit">Edit</a>  
+            <%- include('../partials/deleteForm.ejs', {url: `/machines/${machine.id}`}); %>
+        </div>
     </div>
 <% }) %>

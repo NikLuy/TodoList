@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Machine = require('../models/machine')
+const TaskModule = require('../modules/taskModule')
 const Task = require('../models/task')
 
 //All Machines Route
@@ -50,10 +51,10 @@ router.get('/:id',async (req,res)=>{
     let machine 
     try {
         machine = await Machine.findById(req.params.id)
-        const tasks = await Task.find({machine:machine.id}).exec()
+        const tasks = await Task.find({machine:machine.id}).populate('user').populate('machine').exec()
         res.render('machines/show',{
             machine:machine,
-            tasksByMachine: tasks
+            tasks : tasks
         })
     } catch (error) {
         console.log(error)

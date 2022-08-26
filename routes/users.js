@@ -36,7 +36,7 @@ router.post('/', async (req,res)=>{
     })
     try{
         const newUser = await user.save()
-        res.redirect(`users/${newUser.id}`) 
+        res.redirect(`users/`) 
     }catch(error) {
         console.log(error)
         res.render('users/new', {
@@ -49,10 +49,13 @@ router.post('/', async (req,res)=>{
 router.get('/:id',async (req,res)=>{
     try {
         const user =await User.findById(req.params.id)
-        const tasks = await Task.find({user:user.id}).exec()
+        const tasks = await Task.find({user:user.id})
+                                .populate('user')  
+                                .populate('machine')
+                                .exec()
         res.render('users/show',{
             user:user,
-            tasksByUser: tasks
+            tasks: tasks
         })
     } catch (error) {
         console.log(error)
@@ -77,7 +80,7 @@ router.put('/:id',async(req,res)=>{
         user = await User.findById(req.params.id)
         user.name = req.body.name
         await user.save()
-        res.redirect(`/users/${user.id}`) 
+        res.redirect(`/users`) 
     }catch (error) {
         console.log(error)
         if(user == null){
