@@ -1,31 +1,32 @@
-<ul class="todo-list">
+<div class="">
     <% tasks.forEach(details => { %>
         <% var taskDone = details.done ? 'task-done' : '' %>
-        <li class="todo-list-item <%= taskDone %>">
-            <div class="row">
-                <div class="col-md-6 <%= taskDone %>">
+            <div class="border-top d-flex mt-1 pt-1">
+                <div class="col-md-7 <%= taskDone %>">
                     <%= details.content %> ;
                 </div>
-                <div class="col-md-3 <%= taskDone %>">
+                <div class="col-md-2 <%= taskDone %>">
                     <%= details.machine.name %> ;
                 </div>
                 <div class="col-md-2 <%= taskDone %>">
                     <%= details.user.name %>
                 </div>
-                <div class="col-md-1 form-row  form-row-end">
-                    <a href="/<%= details._id %>/edit" class="edit">
-                        <span class="fas fa-edit form-item"></span>
-                    </a>
-                    <form action="/<%= details._id %>/check" class="edit" method="POST">  
-                        <button type="submit"  class="link-button">
+                <div class="col-md-1 d-flex g-0">
+                        <a href="/<%= details._id %>/edit" class="btn btn-primary btn-sm">
+                            <span class="fas fa-edit form-item"></span>
+                        </a>
+
+                    <form action="/<%= details._id %>/check"  method="POST">  
+                        <button type="submit"  class="btn btn-chose btn-sm">
                             <span class="fas fa-check form-item"></span>
                         </button>
                     </form>
-                    <a href="/<%= details._id %>/delete" class="remove">
-                        <span class="fas fa-times form-item "></span>
-                    </a>
+                    <form method="post" action="/<%= details._id %>/?_method=DELETE">
+                        <button class="btn btn-danger btn-sm" type="submit">
+                            <span class="fas fa-times form-item "></span>
+                        </button>
+                    </form>
                 </div>
             </div>
-        </li>
     <% }) %>
-</ul>
+</div>

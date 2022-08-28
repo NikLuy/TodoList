@@ -1,13 +1,32 @@
-<header>
-    <nav class="header-nav">
-        <a class="header-title" href="/">Todo</a>
-        <ul>
-            <li ><a href="/users">Users</a></li>
-            <li ><a href="/users/new">Add User</a></li>
-            <li ><a href="/machines">Mashinen</a></li>
-            <li ><a href="/machines/new">Add Maschine</a></li>
-            <li ><a href="/">Tasks</a></li>
-            <li ><a href="/new">Add Task</a></li>
-        </ul>
-    </nav>
+<header class="bg-primary">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg justify-content-between">
+            <a class="navbar-brand" href="#">
+                <img src="/images/LogoNL.gif" width="30" height="30" alt="">
+                </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav nav-pills">
+                    <li class="nav-item" ><a class="nav-link text-dark" href="/users">Users</a></li>
+                    <li class="nav-item" ><a class="nav-link text-dark" href="/users/new">Add User</a></li>
+                    <li class="nav-item" ><a class="nav-link text-dark" href="/machines">Mashinen</a></li>
+                    <li class="nav-item" ><a class="nav-link text-dark" href="/machines/new">Add Maschine</a></li>
+                    <li class="nav-item" ><a class="nav-link text-dark" href="/">Tasks</a></li>
+                    <li class="nav-item" ><a class="nav-link text-dark" href="/new">Add Task</a></li>
+                    </ul>
+            </div>
+            <form class="form-inline">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+                </form>
+        </nav>
+    </div>
 </header>
+  

@@ -1,26 +1,23 @@
-<div class="form-row">
-    <div class="form-item">
-        <label>Task</label>
-        <input type="text" name="content" value="<%= searchOptions.content %>">
+
+    <div class="col-sm-6">
+        <label for="content">Task</label>
+        <input type="text" class="form-control" id="content" name="content" value="<%= searchOptions.content %>">
     </div>
-</div>
-<div class="form-row">
-    <div class="form-item">
-        <label>User</label>
-        <select name="userId" >
+    <div class="col-sm-2">
+        <label for="userId">User</label>
+        <select class="form-control" name="userId" >
             <option  value=""></option>
         <% users.forEach(user => { %>
             <option <% if (user.id === searchOptions.userId) {%> selected <%}%> value="<%= user.id %>"><%= user.name %> </option>
         <%  }); %>
         </select>
     </div>
-    <div class="form-item">
-        <label>Maschine</label>
-        <select name="machineId" >
+    <div class="col-sm-3">
+        <label for="machineId">Maschine</label>
+        <select class="form-control" name="machineId" >
             <option  value=""></option>
         <% machines.forEach(machine => { %>
             <option <% if (machine.id === searchOptions.machineId) {%> selected <%}%> value="<%= machine.id %>"><%= machine.name %> </option>
         <%  }); %>
         </select>
     </div>
-</div>

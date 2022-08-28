@@ -35,8 +35,9 @@ router.post('/', async (req,res)=>{
       const newTask = await task.save()
       res.redirect(`/`) 
    } catch (error) {
-      warn(error)
-      renderNewPage(res, new Task(), true)
+      res.redirect(`/`) 
+      console.log(error)
+      //renderNewPage(res, new Task(), true)
    }
 })
 
@@ -72,10 +73,11 @@ router.put('/:id', async (req,res)=>{
 
 router.post("/:id/check",async (req, res, next) => {
    try {
+      console.log(req.params.id)
       const id = req.params.id;
       const task =  await Task.findById(id);
       await Task.findByIdAndUpdate(id, { done: !task.done });
-   res.redirect("/");
+      res.redirect("/");
    } catch (error) {
       console.warn(error)
       res.redirect("/");
