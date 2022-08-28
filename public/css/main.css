@@ -32,3 +32,7 @@ body{
     cursor:pointer;
     text-decoration: none;
 }
+
+.task-done{
+    text-decoration: line-through;
+}

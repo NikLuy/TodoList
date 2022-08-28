@@ -21,7 +21,7 @@ router.get('/new',  async (req,res)=>{
 })
 
 router.get('/:id/edit',  async (req,res)=>{
-   renderEditPage(res)
+   renderEditPage(res,req)
 })
 
 //Create new Task Route
@@ -63,7 +63,7 @@ router.put('/:id', async (req,res)=>{
    }catch (error){
        console.log(error)
       if(task != null){
-         renderEditPage(res, true)
+         renderEditPage(res, req,true)
       }else{
          redirect('/')
       }
@@ -73,7 +73,6 @@ router.put('/:id', async (req,res)=>{
 
 router.post("/:id/check",async (req, res, next) => {
    try {
-      console.log(req.params.id)
       const id = req.params.id;
       const task =  await Task.findById(id);
       await Task.findByIdAndUpdate(id, { done: !task.done });
@@ -136,12 +135,14 @@ router.delete('/:id', async (req,res)=>{
    }
 })
 
-async function renderEditPage(res, hasError = false){
+async function renderEditPage(res,req, hasError = false){
    try {
       if(hasError)console.log("Error while Uptadting")
       params = await TaskModule.renderPage(req);
+      console.log(params)
       res.render('tasks/edit', params)
    } catch (error) {
+      console.log(error)
       res.redirect('/')
    }
 }

@@ -1,64 +1,64 @@
-<ul class="todo-list">
+<div class="">
     <% tasks.forEach(details => { %>
         <% var taskDone = details.done ? 'task-done' : '' %>
         <% if (details._id == idTask) { %>
-            <li class="todo-list-item">
             <form action="/<%= details._id %>" method="PUT">
-                <div class="form-row">
-                    <div class="form-item">
-                        <label>Task</label>
-                        <input type="text" name="content" value="<%= details.content%>">
-                    </div>
+                <div class="border-top d-flex mt-1 pt-1">
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="content" name="content" value="<%= details.content%>">
                 </div>
-                <div class="form-row">
-                    <div class="form-item">
-                        <label>User</label>
-                        <select name="user" >
+                <div class="col-sm-2">
+                    <select class="form-control" name="user" >
+                        <option  value=""></option>
                         <% users.forEach(user => { %>
                             <option <% if (user.id === details.user) {%> selected <%}%> value="<%= user.id %>"><%= user.name %> </option>
                         <%  }); %>
-                        </select>
-                    </div>
-                    <div class="form-item">
-                        <label>Maschine</label>
-                        <select name="machine" >
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <select class="form-control" name="machine" >
+                        <option  value=""></option>
                         <% machines.forEach(machine => { %>
-                            <option <% if (machine.id === details.machine) {%> selected <%}%> value="<%= machine.id %>"><%= machine.name %> </option>
+                            <option <% if (machine.id === details.user) {%> selected <%}%> value="<%= machine.id %>"><%= machine.name %> </option>
                         <%  }); %>
-                        </select>
-                    </div>
-                </div>
-            <button type="submit">Confirm</button>
-            <a href="/" class="cancel">Cancel</a>
-            </form>
-            </li>
-            <% } else { %>
-        <li class="todo-list-item <%= taskDone %>">
-            <div class="row">
-                <div class="col-md-6 <%= taskDone %>">
-                    <%= details.content %> ;
-                </div>
-                <div class="col-md-3 <%= taskDone %>">
-                    <%= details.machine.name %> ;
-                </div>
-                <div class="col-md-2 <%= taskDone %>">
-                    <%= details.user.name %>
-                </div>
-                <div class="col-md-1 form-row  form-row-end">
-                    <a href="/<%= details._id %>/edit" class="edit">
-                        <span class="fas fa-edit form-item"></span>
-                    </a>
-                    <form action="/<%= details._id %>/check" class="edit" method="POST">  
-                        <button type="submit"  class="link-button">
-                            <span class="fas fa-check form-item"></span>
-                        </button>
-                    </form>
-                    <a href="/<%= details._id %>/delete" class="remove">
-                        <span class="fas fa-times form-item "></span>
-                    </a>
+                    </select>
+                </div>    
+                <div class="col-md-2 d-flex g-0">
+                    <button class="btn btn-primary btn-sm" type="submit">Confirm</button>
+                    <a href="/" class="btn btn-danger btn-sm">Cancel</a>
                 </div>
             </div>
-        </li>
+            </form>
+  
+            <% } else { %>
+                <% var taskDone = details.done ? 'task-done' : '' %>
+                <div class="border-top d-flex mt-1 pt-1">
+                    <div class="col-md-7 <%= taskDone %>">
+                        <%= details.content %> ;
+                    </div>
+                    <div class="col-md-2 <%= taskDone %>">
+                        <%= details.machine.name %> ;
+                    </div>
+                    <div class="col-md-2 <%= taskDone %>">
+                        <%= details.user.name %>
+                    </div>
+                    <div class="col-md-1 d-flex g-0">
+                            <a href="/<%= details._id %>/edit" class="btn btn-primary btn-sm">
+                                <span class="fas fa-edit form-item"></span>
+                            </a>
+    
+                        <form action="/<%= details._id %>/check"  method="POST">  
+                            <button type="submit"  class="btn btn-<%= details.done ? 'dark': 'success'%>  btn-sm">
+                                <span class="fas fa-check form-item"></span>
+                            </button>
+                        </form>
+                        <form method="post" action="/<%= details._id %>/?_method=DELETE">
+                            <button class="btn btn-danger btn-sm" type="submit">
+                                <span class="fas fa-times form-item "></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
         <% } %>
     <% }) %>
-</ul>
+</div>

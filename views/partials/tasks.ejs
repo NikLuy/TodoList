@@ -17,7 +17,7 @@
                         </a>
 
                     <form action="/<%= details._id %>/check"  method="POST">  
-                        <button type="submit"  class="btn btn-chose btn-sm">
+                        <button type="submit"  class="btn btn-<%= details.done ? 'dark': 'success'%>  btn-sm">
                             <span class="fas fa-check form-item"></span>
                         </button>
                     </form>
