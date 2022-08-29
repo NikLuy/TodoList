@@ -3,7 +3,7 @@ const router = express.Router()
 const Task = require('../models/task')
 const User = require('../models/user')
 const TaskModule = require('../modules/taskModule')
-const Machines = require('../models/machine')
+const TodoLists = require('../models/todolist')
 
 //All Task Route
 router.get('/', async (req,res)=>{
@@ -29,7 +29,7 @@ router.post('/', async (req,res)=>{
    const task = new Task({
       content : req.body.content,
       user: req.body.user,
-      machine: req.body.machine
+      todolist: req.body.todolist
    })
    try {
       const newTask = await task.save()
@@ -52,7 +52,7 @@ router.put('/:id', async (req,res)=>{
       task = await Task.findById(req.params.id)
       task.content = req.body.content,
       task.user= req.body.user,
-      task.machine= req.body.machine
+      task.todolist= req.body.todolist
       if(req.body.cover != null && req.body.cover != ''){
          saveCover(task, req.body.cover)
       }
@@ -88,7 +88,7 @@ router.post('/', async (req,res)=>{
    const task = new Task({
       content : req.body.content,
       user: req.body.user,
-      machine: req.body.machine
+      todolist: req.body.todolist
    })
    try {
       const newTask = await task.save()
@@ -104,7 +104,7 @@ router.post('/', async (req,res)=>{
 //    try {
 //       const task = await Task.findById(req.params.id)
 //                               .populate('user')  
-//                               .populate('machine')
+//                               .populate('todolist')
 //                               .exec()
 //       res.render('tasks/show',{task:task})
 //    } catch (error) {
@@ -153,10 +153,10 @@ async function renderNewPage(res, task, id, hasError = false){
 async function renderFormPage(res, task,form,id, hasError = false){
    try {
       const users = await User.find({})
-      const machines  =await Machines.find({})
+      const todolists  =await TodoLists.find({})
       const params = {
          users:users,
-         machines:machines,
+         todolists:todolists,
          task:task,
          idTask: id,
       }

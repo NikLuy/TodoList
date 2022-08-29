@@ -1,19 +1,19 @@
 
 .user-row,
-.machine-row{
+.todolist-row{
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
 }
 .user-name,
-.machine-name{
+.todolist-name{
     font-size: 1.5rem;
 }
-.machine-name a,
-.machine-name a:visited{
+.todolist-name a,
+.todolist-name a:visited{
     color: var(--color-text-light);
 }
-.machine-name a:hover{
+.todolist-name a:hover{
     text-decoration: none;
 }
 

@@ -12,8 +12,8 @@
 </form>
 <br>
 <% users.forEach(user => {%>
-    <div class="machine-row">
-        <div class="machine-name"><%=user.name %> </div>  
+    <div class="todolist-row">
+        <div class="todolist-name"><%=user.name %> </div>  
         <div class="btn-row">
             <a class="btn btn-primary" href="/users/<%= user.id %>">View</a>  
             <a class="btn btn-primary" href="/users/<%= user.id %>/edit">Edit</a>  

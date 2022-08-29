@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Task = require("../models/task")
 const User = require('../models/user')
-const Machines = require('../models/machine')
+const TodoLists = require('../models/todolist')
 
 // router.get('/', (req,res)=>{
 
@@ -34,9 +34,9 @@ router.post('/',async (req, res) => {
 //     .get((req, res) => {
 //     const id = req.params.id;
 //     const users = User.find({})
-//     const machines = Machines.find({})
+//     const todolists = TodoLists.find({})
 //     Task.find({}, (err, tasks) => {
-//     res.render("tasks/edit", { tasks: tasks, idTask: id, users:users, machines:machines });
+//     res.render("tasks/edit", { tasks: tasks, idTask: id, users:users, todolists:todolists });
 //     });
 //     })
 //     .post((req, res) => {

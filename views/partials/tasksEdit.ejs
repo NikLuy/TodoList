@@ -16,10 +16,10 @@
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <select class="form-control" name="machine" >
+                    <select class="form-control" name="todolist" >
                         <option  value=""></option>
-                        <% machines.forEach(machine => { %>
-                            <option <% if (machine.id === details.user) {%> selected <%}%> value="<%= machine.id %>"><%= machine.name %> </option>
+                        <% todolists.forEach(todolist => { %>
+                            <option <% if (todolist.id === details.user) {%> selected <%}%> value="<%= todolist.id %>"><%= todolist.name %> </option>
                         <%  }); %>
                     </select>
                 </div>    
@@ -37,7 +37,7 @@
                         <%= details.content %> ;
                     </div>
                     <div class="col-md-2 <%= taskDone %>">
-                        <%= details.machine.name %> ;
+                        <%= details.todolist.name %> ;
                     </div>
                     <div class="col-md-2 <%= taskDone %>">
                         <%= details.user.name %>

@@ -1,8 +1,8 @@
 <div class="todo">
-    <% groupedTasks.forEach(machine => { %>
+    <% groupedTasks.forEach(todolist => { %>
         <div class="card p-2 mt-2">
-            <h3><a href="machines/<%= machine.tasks[0].machine.id%>"><%=  machine.tasks[0].machine.name %></a> </h3> 
-            <%- include('tasksEdit.ejs', {tasks:machine.tasks })%>
+            <h3><a href="todolists/<%= todolist.tasks[0].todolist.id%>"><%=  todolist.tasks[0].todolist.name %></a> </h3> 
+            <%- include('tasksEdit.ejs', {tasks:todolist.tasks })%>
         </div>
     <% }) %>
 </div>

@@ -51,7 +51,7 @@ router.get('/:id',async (req,res)=>{
         const user =await User.findById(req.params.id)
         const tasks = await Task.find({user:user.id})
                                 .populate('user')  
-                                .populate('machine')
+                                .populate('todolist')
                                 .exec()
         res.render('users/show',{
             user:user,

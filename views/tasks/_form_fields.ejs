@@ -12,11 +12,11 @@
     </select>
 </div>
 <div class="col-sm-3">
-    <label for="machineId">Maschine</label>
-    <select class="form-control" name="machine" >
+    <label for="todolistId">Maschine</label>
+    <select class="form-control" name="todolist" >
         <option  value=""></option>
-    <% machines.forEach(machine => { %>
-        <option <% if (machine.id === searchOptions.machineId) {%> selected <%}%> value="<%= machine.id %>"><%= machine.name %> </option>
+    <% todolists.forEach(todolist => { %>
+        <option <% if (todolist.id === searchOptions.todolistId) {%> selected <%}%> value="<%= todolist.id %>"><%= todolist.name %> </option>
     <%  }); %>
     </select>
 </div>
