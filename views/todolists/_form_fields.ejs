@@ -1,7 +1,29 @@
-<div class="form-row">
-    <div class="form-item">
-        <label>Name</label>
-        <input type="text" name="name" value="<%= todolist.name%>">
+<button class="btn btn-primary col-sm-2 mt-3 mb-1" type="button" data-toggle="collapse" data-target="#collapseFormFields" aria-expanded="false" aria-controls="collapseFormFields">
+    <%=  collapsBtnText  %>
+</button>
+<div class="collapse" id="collapseFormFields">
+    <div class="card p-3">
+        <form class="mt-2" action="<%= url %>" method="post" >
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<%= todolist.name%>">
+                </div>
+                <div class="col-sm-2">
+                    <label for="userId">User</label>
+                    <select class="form-control" name="user" >
+                        <option  value=""></option>
+                    <% users.forEach(user => { %>
+                        <option <%= (locals.todolist && locals.todolist.user && user.id === todolist.user.id) ? 'selected' : '' %> value="<%= user.id %>"><%= user.name %> </option>
+                    <%  }); %>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <button  class="btn btn-success mt-4" type="submit"><%=  submitBtnText %></button>
+            </div>
+        </form>
     </div>
 </div>
+
 

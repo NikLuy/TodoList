@@ -1,0 +1,17 @@
+<button class="btn btn-primary col-sm-2 mt-3 mb-1" type="button" data-toggle="collapse" data-target="#collapseFormSearch" aria-expanded="false" aria-controls="collapseFormSearch">
+    <%=  collapsBtnText  %>
+</button>
+<div class="<%= searchOptions.name ==='' ? 'collapse' : ''%>" id="collapseFormSearch">
+    <div class="card p-3">
+        <form class="mt-2" action="<%= url %>" method="get" >
+            <div class="form-group row">
+                <div class="col-11">
+                    <input type="text" class="form-control" id="name" name="name" value="<%= searchOptions.name %>">
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-primary" type="submit"><%= submitBtnText %></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

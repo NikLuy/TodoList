@@ -4,39 +4,46 @@
         <% if (details._id == idTask) { %>
             <form action="/<%= details._id %>" method="PUT">
                 <div class="border-top d-flex mt-1 pt-1">
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" id="content" name="content" value="<%= details.content%>">
-                </div>
-                <div class="col-sm-2">
-                    <select class="form-control" name="user" >
-                        <option  value=""></option>
-                        <% users.forEach(user => { %>
-                            <option <% if (user.id === details.user) {%> selected <%}%> value="<%= user.id %>"><%= user.name %> </option>
-                        <%  }); %>
-                    </select>
-                </div>
-                <div class="col-sm-3">
-                    <select class="form-control" name="todolist" >
-                        <option  value=""></option>
+                    <div class="col-sm-6">
+                        <label for="content">Task</label>
+                        <input type="text" class="form-control" id="content" name="content" value="<%=  details.content%>">
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="todolistId">Maschine</label>
+                        <select class="form-control" name="todolist" >
+                            <option  value=""></option>
                         <% todolists.forEach(todolist => { %>
-                            <option <% if (todolist.id === details.user) {%> selected <%}%> value="<%= todolist.id %>"><%= todolist.name %> </option>
+                            <option <%= (details.todolist && todolist.id === details.todolist.id) ? 'selected' : '' %> value="<%= todolist.id %>"><%= todolist.name %> </option>
                         <%  }); %>
-                    </select>
-                </div>    
-                <div class="col-md-2 d-flex g-0">
-                    <button class="btn btn-primary btn-sm" type="submit">Confirm</button>
-                    <a href="/" class="btn btn-danger btn-sm">Cancel</a>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="userId">User</label>
+                        <select class="form-control" name="user" >
+                            <option  value=""></option>
+                        <% users.forEach(user => { %>
+                            <option <%= (details.user && user.id === details.user.id) ? 'selected' : '' %> value="<%= user.id %>"><%= user.name %> </option>
+                        <%  }); %>
+                        </select>
+                    </div>
+                    <div class="col-md-1 d-flex g-0 mt-4 mb-1">
+                        <button class="btn btn-primary btn-sm" type="submit">
+                            Save
+                        </button>
+                        <a href="/" class="btn btn-danger btn-sm">
+                            <span class="fas fa-times form-item"></span>
+                        </a>
+                    </div>
                 </div>
-            </div>
             </form>
   
             <% } else { %>
                 <% var taskDone = details.done ? 'task-done' : '' %>
                 <div class="border-top d-flex mt-1 pt-1">
-                    <div class="col-md-7 <%= taskDone %>">
+                    <div class="col-md-6 <%= taskDone %>">
                         <%= details.content %> ;
                     </div>
-                    <div class="col-md-2 <%= taskDone %>">
+                    <div class="col-md-3 <%= taskDone %>">
                         <%= details.todolist.name %> ;
                     </div>
                     <div class="col-md-2 <%= taskDone %>">
@@ -52,11 +59,7 @@
                                 <span class="fas fa-check form-item"></span>
                             </button>
                         </form>
-                        <form method="post" action="/<%= details._id %>/?_method=DELETE">
-                            <button class="btn btn-danger btn-sm" type="submit">
-                                <span class="fas fa-times form-item "></span>
-                            </button>
-                        </form>
+                        <%- include('../partials/deleteForm.ejs', {url: `/todolists/${details._id}`}); %>
                     </div>
                 </div>
         <% } %>

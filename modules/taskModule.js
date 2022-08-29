@@ -43,6 +43,10 @@ async function getArray(mdata) {
                              .exec()
      const groupedTasks = await getArray(tasks);
      const id = req.params.id;
+     let task
+     if(id){
+      const task = await Task.findById(id)
+     }
      const users = await User.find({})
      const todolists  =await TodoLists.find({})
      const params = {
@@ -50,6 +54,7 @@ async function getArray(mdata) {
         searchOptions:req.query,
         users:users,
         todolists:todolists,
+        task:task,
         idTask: id
      }
     return params;

@@ -1,7 +1,36 @@
-<div class="form-row">
-    <div class="form-item">
-        <label>Name</label>
-        <input type="text" name="name" value="<%= user.name%>">
+<button class="btn btn-primary col-sm-2 mt-3 mb-1" type="button" data-toggle="collapse" data-target="#collapseFormFields" aria-expanded="false" aria-controls="collapseFormFields">
+    <%=  collapsBtnText  %>
+</button>
+<div class="collapse" id="collapseFormFields">
+    <div class="card p-3">
+        <form class="mt-2" action="<%= url %>" method="post" >
+            <div class="form-group row">
+                <div class="col-sm-6">
+                <label for="firstname">First name</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" value="<%= locals.user != null ? user.firstname:'' %>" placeholder="First name">
+                </div>
+                <div class="col-sm-6">
+                <label for="lastname">Last name</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" value="<%= locals.user != null ? user.lastname :'' %>" placeholder="Last name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="<%= locals.user != null ? user.email :'' %>" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="col-sm-2">
+                <label for="initials">Initials*</label>
+                <input type="text" class="form-control" id="initials" name="initials" value="<%= locals.user != null ? user.initials :'' %>" placeholder="Initials">
+                </div>
+            </div>
+            <div class="form-group d-none"><!-- remove class d-none to show -->
+                <label for="password ">Password*</label>  
+                <input type="password" class="form-control" id="password" name="password" value="1234" placeholder="Password">
+            </div>
+            <div class="col-sm-1">
+                <button  class="btn btn-success mt-4" type="submit"><%=  submitBtnText %></button>
+            </div>
+        </form>
     </div>
 </div>
-

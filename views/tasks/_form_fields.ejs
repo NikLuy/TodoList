@@ -1,24 +1,35 @@
-<div class="col-sm-6">
-    <label for="content">Task</label>
-    <input type="text" class="form-control" id="content" name="content" value="<%= locals.task ? task.content: ''%>">
+<button class="btn btn-primary col-sm-2 mt-3 mb-1" type="button" data-toggle="collapse" data-target="#collapseFormFields" aria-expanded="false" aria-controls="collapseFormFields">
+    <%=  collapsBtnText  %>
+</button>
+<div class="collapse" id="collapseFormFields">
+    <div class="card p-2">
+        <form class="" action="<%= url %>" method="post" >
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <label for="content">Task</label>
+                <input type="text" class="form-control" id="content" name="content" value="<%= locals.task ? task.content: ''%>">
+            </div>
+            <div class="col-sm-2">
+                <label for="userId">User</label>
+                <select class="form-control" name="user" >
+                    <option  value=""></option>
+                <% users.forEach(user => { %>
+                    <option <%= (locals.task && task.user && user.id === task.user.Id) ? 'selected' : '' %> value="<%= user.id %>"><%= user.name %> </option>
+                <%  }); %>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <label for="todolistId">Maschine</label>
+                <select class="form-control" name="todolist" >
+                    <option  value=""></option>
+                <% todolists.forEach(todolist => { %>
+                    <option <%= (locals.task && task.todolist && todolist.id === task.todolist.Id) ? 'selected' : '' %> value="<%= todolist.id %>"><%= todolist.name %> </option>
+                <%  }); %>
+                </select>
+            </div>
+            <div class="col-sm-1">
+                <button  class="btn btn-success mt-4" type="submit"><%= submitBtnText %></button>
+            </div>
+        </form>
+    </div>
 </div>
-<div class="col-sm-2">
-    <label for="userId">User</label>
-    <select class="form-control" name="user" >
-        <option  value=""></option>
-    <% users.forEach(user => { %>
-        <option <% if (user.id === searchOptions.userId) {%> selected <%}%> value="<%= user.id %>"><%= user.name %> </option>
-    <%  }); %>
-    </select>
-</div>
-<div class="col-sm-3">
-    <label for="todolistId">Maschine</label>
-    <select class="form-control" name="todolist" >
-        <option  value=""></option>
-    <% todolists.forEach(todolist => { %>
-        <option <% if (todolist.id === searchOptions.todolistId) {%> selected <%}%> value="<%= todolist.id %>"><%= todolist.name %> </option>
-    <%  }); %>
-    </select>
-</div>
-
-

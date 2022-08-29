@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const task = require('./task')
+const Task = require('./task')
 const user = require('./user');
 
 const todolistSchema = new mongoose.Schema({
@@ -19,11 +19,12 @@ const todolistSchema = new mongoose.Schema({
 })
 
 todolistSchema.pre('remove', function(next){
-    task.find({todolist: this.id}, (err,tasks) => {
+    const Task = require('./task')
+    Task.find({todolist: this.id}, (err,tasks) => {
         if(err){
             next(err)
         }else if (tasks.length > 0){
-            next( new Error('This todolist has still opentasks'))
+            next( new Error('This List has still tasks'))
         }else{
             next()
         }

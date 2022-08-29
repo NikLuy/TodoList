@@ -1,23 +1,19 @@
-<h2 class="page-header">Search Maschine</h2>
-<form action="/todolists" method="GET">
-    <div class="form-row">
-        <div class="form-item">
-            <label>Name</label>
-            <input type="text" name="name" value="<%= searchOptions.name %>">
-        </div>
-    </div>
-    <div class="form-row form-row-end">
-        <button class="btn btn-primary" type="submit">Search</button>
-    </div>
-</form>
+<h2 class="page-header"><%= locals.title ? title : 'Listen Übersicht'%></h2>
+<%- include('_formSearch', {url: `/todolists`, submitBtnText:'Search', collapsBtnText:'Search Lists'})%>
+<%- include('_form_fields', {url: `/todolists`, submitBtnText:'Add', collapsBtnText:'Add List'})%>
 <br>
 <% todolists.forEach(todolist => {%>
-    <div class="todolist-row">
-        <div class="todolist-name"><%=todolist.name %> </div>  
-        <div class="btn-row">
-            <a class="btn btn-primary" href="/todolists/<%= todolist.id %>">View</a>  
-            <a class="btn btn-primary" href="/todolists/<%= todolist.id %>/edit">Edit</a>  
-            <%- include('../partials/deleteForm.ejs', {url: `/todolists/${todolist.id}`}); %>
+    <div class="card p-2 mt-2">
+        <div class="d-flex">
+            <div class="col-md-11 ">
+                <%=todolist.name %>
+            </div>
+            <div class="col-md-1 d-flex g-0 ">
+                <a href="/todolists/<%= todolist.id %>/edit" class="btn btn-primary btn-sm">
+                    <span class="fas fa-edit form-item"></span>
+                </a>
+                <%- include('../partials/deleteForm.ejs', {url: `/todolists/${todolist.id}`}); %>
+            </div>
         </div>
     </div>
 <% }) %>

@@ -1,14 +1,6 @@
 <h2 class="page-header">Search Tasks</h2>
-    <%- include('../partials/tasksSearch.ejs', {url: `/`})%>
-<div class="card p-3 mt-3">
-    <form action="/" method="post" >
-        <div class="form-group row ">
-            <%- include('_form_fields')  %> 
-            <div class="col-sm-1">
-                <button  class="btn btn-success mt-4" type="submit">Create</button>
-            </div>
-        </div>
-    </form>
+    <%- include('_formSearch', {url: `/`, submitBtnText:'Search', collapsBtnText:'Search Task'})%>
+    <%- include('_form_fields', {url: `/`, submitBtnText:'Add', collapsBtnText:'Add Task'})%>
 </div>
 <br>
 <%- include('../partials/groupedTasks.ejs')%>

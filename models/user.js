@@ -25,14 +25,14 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.virtual('name').get(function(){
-    var fullname
+    var fullname = ''
     if( this.firstname !=null && this.firstname != '' ){
-        fullname = this.firstname
+        fullname += this.firstname
     }
     if( this.lastname !=null && this.lastname != '' )
     {
         if(fullname != ''){fullname += ' '}
-        fullname = this.lastname
+        fullname += this.lastname
     }
     if(fullname == '')
     {

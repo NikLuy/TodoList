@@ -3,26 +3,12 @@ const router = express.Router()
 const TodoList = require('../models/todolist')
 const TaskModule = require('../modules/taskModule')
 const Task = require('../models/task')
+const User = require('../models/user')
+
 
 //All TodoLists Route
 router.get('/',async (req,res)=>{
-    let searchOptions = {}
-    if(req.query.name != null && req.query.name !== ''){
-        searchOptions.name = new RegExp(req.query.name, 'i')
-    }
-    try {
-        const todolists = await TodoList.find(searchOptions)
-        res.render('todolists/index', {
-            todolists:todolists, 
-            searchOptions: req.query
-        })
-    
-    } catch (error) {
-        console.log(error)
-        res.redirect('/',{
-            errorMessage: 'Error read TodoLists'
-        })
-    }
+    await renderUserIndexPage(req,res)
 })
 
 //New TodoLists Route
@@ -33,7 +19,8 @@ router.get('/new',(req,res)=>{
 //Create TodoLists Route
 router.post('/', async (req,res)=>{
     const todolist = new TodoList({
-        name: req.body.name
+        name: req.body.name,
+        user: req.body.user
     })
     try{
         const newTodoList = await todolist.save()
@@ -65,8 +52,9 @@ router.get('/:id',async (req,res)=>{
 
 router.get('/:id/edit',async (req,res)=>{
     try {
-        const todolist = await TodoList.findById(req.params.id)
-        res.render('todolists/edit', {todolist:todolist})
+        const todolist = await TodoList.findById(req.params.id).populate('user').exec()
+        const users = await User.find({})
+        res.render('todolists/edit', {todolist:todolist, users:users})
     } catch (error) {
         console.log(error)
         res.redirect('/todolists')
@@ -94,6 +82,7 @@ router.put('/:id',async(req,res)=>{
 router.delete('/:id',async (req,res)=>{
     let todolist 
     try{
+        console.log(req.params.id)
         todolist = await TodoList.findById(req.params.id)
         await todolist.remove()
         res.redirect('/todolists') 
@@ -102,9 +91,33 @@ router.delete('/:id',async (req,res)=>{
         if(todolist == null){
             res.redirect('/todolists')
         }else{
-            res.redirect(`/todolists/${todolist.id}`)
+            res.redirect(`/todolists`)
         }
     }
 })
+
+async function renderUserIndexPage(req,res, todolist = new TodoList, errorMessage = null){
+    let searchOptions = {}
+    if(req.query.name != null && req.query.name !== ''){
+        searchOptions.name = new RegExp(req.query.name, 'i')
+    }
+    try {
+        const todolists = await TodoList.find(searchOptions)
+        const users = await User.find({})
+        res.render('todolists/index', {
+            users:users,
+            todolist:todolist,
+            todolists:todolists, 
+            searchOptions: req.query
+        })
+    
+    } catch (error) {
+        console.log(error)
+        res.redirect('/',{
+            errorMessage: 'Error read TodoLists'
+        })
+    }
+}
+
 
 module.exports = router

@@ -21,11 +21,7 @@
                             <span class="fas fa-check form-item"></span>
                         </button>
                     </form>
-                    <form method="post" action="/<%= details._id %>/?_method=DELETE">
-                        <button class="btn btn-danger btn-sm" type="submit">
-                            <span class="fas fa-times form-item "></span>
-                        </button>
-                    </form>
+                    <%- include('../partials/deleteForm.ejs', {url: `/todolists/${details._id}`}); %>
                 </div>
             </div>
     <% }) %>

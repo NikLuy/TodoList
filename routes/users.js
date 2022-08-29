@@ -2,47 +2,36 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 const Task = require('../models/task')
+const bcrypt = require('bcrypt')
 
 //All Users Route
 router.get('/',async (req,res)=>{
-    let searchOptions = {}
-    if(req.query.name != null && req.query.name !== ''){
-        searchOptions.name = new RegExp(req.query.name, 'i')
-    }
-    try {
-        const users = await User.find(searchOptions)
-        res.render('users/index', {
-            users:users, 
-            searchOptions: req.query
-        })
-    
-    } catch (error) {
-        console.log(error)
-        res.redirect('/',{
-            errorMessage: 'Error read Users'
-        })
-    }
-})
-
-//New Users Route
-router.get('/new',(req,res)=>{
-    res.render('users/new', {user: new User()})
+    await renderUserIndexPage(req,res)
 })
 
 //Create Users Route
 router.post('/', async (req,res)=>{
-    const user = new User({
-        name: req.body.name
-    })
+    var user
     try{
+        user = new User({
+            firstname : req.body.firstname,
+            lastname : req.body.lastname,
+            initials : req.body.initials,
+            email: req.body.email,
+            password: req.body.password
+         })
+        const hashedPassword =await bcrypt.hash(req.body.password, 10);
+        user.password = hashedPassword;
         const newUser = await user.save()
         res.redirect(`users/`) 
     }catch(error) {
         console.log(error)
-        res.render('users/new', {
-            user:user, 
-            errorMessage: 'Error creating User'
-        })
+        if(error.code === 11000){
+            renderUserIndexPage(req, res, user , `User with same Initials(${req.body.initials}) already exists`)
+          }else{
+          console.log(error);
+          renderUserIndexPage(req, res, user , error)
+          }
     }
 })
 
@@ -71,22 +60,24 @@ router.get('/:id/edit',async (req,res)=>{
         console.log(error)
         res.redirect('/users')
     }
-   
 })
 
 router.put('/:id',async(req,res)=>{
     let user 
     try{
         user = await User.findById(req.params.id)
-        user.name = req.body.name
+        user.firstname = req.body.firstname,
+        user.lastname = req.body.lastname,
+        user.initials = req.body.initials,
+        user.email = req.body.email,
         await user.save()
-        res.redirect(`/users`) 
+        res.redirect(`/users/${user.id}/edit`) 
     }catch (error) {
         console.log(error)
         if(user == null){
             res.redirect('/users')
         }else{
-            res.redirect(`/users/${user.id}edit`)
+            res.redirect(`/users/${user.id}/edit`)
         }
     }
 })
@@ -106,5 +97,29 @@ router.delete('/:id',async (req,res)=>{
         }
     }
 })
+
+async function renderUserIndexPage(req,res, user = new User, errorMessage = null){
+    let searchOptions = {}
+    if(req.query.name != null && req.query.name !== ''){
+        let re = new RegExp(req.query.name, 'i');
+        searchOptions = {lastname: re }
+    }
+     try {
+     
+        const users = await User.find(searchOptions).exec();
+        res.render('users/index', {
+            users:users, 
+            user:user,
+            searchOptions: req.query,
+            errorMessage:errorMessage
+        })
+    
+    } catch (error) {
+        console.log(error)
+        res.redirect('/',{
+            errorMessage: 'Error read Users'
+        })
+    }
+}
 
 module.exports = router
