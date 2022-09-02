@@ -38,10 +38,12 @@ router.get('/:id',async (req,res)=>{
     let todolist 
     try {
         todolist = await TodoList.findById(req.params.id)
+        const users = await User.find({})
         const tasks = await Task.find({todolist:todolist.id}).populate('user').populate('todolist').exec()
         res.render('todolists/show',{
             todolist:todolist,
-            tasks : tasks
+            tasks : tasks,
+            users: users
         })
     } catch (error) {
         console.log(error)

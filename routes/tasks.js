@@ -47,6 +47,7 @@ router.put('/:id', async (req,res)=>{
    let id 
    let task
    try {
+      console.log('TaskPut')
       tasks = Task.find({})
       id = req.params.id
       task = await Task.findById(req.params.id)
@@ -99,19 +100,12 @@ router.post('/', async (req,res)=>{
    }
 })
 
-// //Show Task Route
-// router.get('/:id', async (req,res)=>{
-//    try {
-//       const task = await Task.findById(req.params.id)
-//                               .populate('user')  
-//                               .populate('todolist')
-//                               .exec()
-//       res.render('tasks/show',{task:task})
-//    } catch (error) {
-//       console.log(error)
-//       res.redirect('/tasks')
-//    }
-// })
+//Show Task Route
+router.get('/:id', async (req,res)=>{
+
+      res.redirect('/')
+
+})
 
 
 
@@ -139,7 +133,6 @@ async function renderEditPage(res,req, hasError = false){
    try {
       if(hasError)console.log("Error while Uptadting")
       params = await TaskModule.renderPage(req);
-      console.log(params)
       res.render('tasks/edit', params)
    } catch (error) {
       console.log(error)

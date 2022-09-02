@@ -1,2 +1,3 @@
 <h2 class="page-header"><%= todolist.name %></h2>
+<%- include('_form_fields', {url: `/`, submitBtnText:'Add', collapsBtnText:'Add Task'})%>
     <%- include('../partials/tasks.ejs')%>

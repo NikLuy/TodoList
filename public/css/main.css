@@ -18,7 +18,7 @@
 
 body{
     /* background: linear-gradient(to right,var(--color-background-dark), var(--color-background-light)); */
-    background: #e27442;
+    /* background: #e27442; */
 }
 
 .edit {
@@ -40,4 +40,13 @@ body{
 
 .btn-icon{
 max-height: 32px;
+}
+
+h3 a{
+    color: black;
+    text-decoration: underline;
+}
+h3 a:hover{
+    color: black;
+    text-decoration: none;
 }
