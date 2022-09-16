@@ -107,11 +107,9 @@ router.get('/:id', async (req,res)=>{
 
 })
 
-
-
-
 //Delete Task Route
 router.delete('/:id', async (req,res)=>{
+   
    let task 
    try {
       task = await Task.findById(req.params.id)

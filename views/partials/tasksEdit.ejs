@@ -4,11 +4,11 @@
         <% if (details._id == idTask) { %>
             <form action="/<%= details._id %>?_method=PUT" method="post">
                 <div class="border-top d-flex mt-1 pt-1">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <label for="content">Task</label>
                         <input type="text" class="form-control" id="content" name="content" value="<%=  details.content%>">
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-5">
                         <label for="todolistId">Maschine</label>
                         <select class="form-control" name="todolist" >
                             <option  value=""></option>
@@ -40,12 +40,10 @@
             <% } else { %>
                 <% var taskDone = details.done ? 'task-done' : '' %>
                 <div class="border-top d-flex mt-1 pt-1">
-                    <div class="col-md-6 <%= taskDone %>">
+                    <div class="col-md-9 <%= taskDone %>">
                         <%= details.content %> ;
                     </div>
-                    <div class="col-md-3 <%= taskDone %>">
-                        <%= details.todolist.name %> ;
-                    </div>
+              
                     <div class="col-md-2 <%= taskDone %>">
                         <%= details.user.name %>
                     </div>
