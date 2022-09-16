@@ -36,7 +36,7 @@ router.post('/', async (req,res)=>{
       res.redirect(`/`) 
    } catch (error) {
       res.redirect(`/`) 
-      console.log(error)
+      //console.log(error)
       //renderNewPage(res, new Task(), true)
    }
 })
@@ -47,7 +47,6 @@ router.put('/:id', async (req,res)=>{
    let id 
    let task
    try {
-      console.log('TaskPut')
       tasks = Task.find({})
       id = req.params.id
       task = await Task.findById(req.params.id)

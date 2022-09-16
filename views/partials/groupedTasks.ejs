@@ -2,7 +2,7 @@
     <% groupedTasks.forEach(todolist => { %>
         <div class="card p-2 mt-2">
             <h5><a href="todolists/<%= todolist.tasks[0].todolist.id%>"><%=  todolist.tasks[0].todolist.name %></a> </h5> 
-            <%- include('tasks.ejs', {tasks:todolist.tasks })%>
+            <%- include('tasks.ejs', {tasks:todolist.tasks})%>
         </div>
     <% }) %>
 </div>

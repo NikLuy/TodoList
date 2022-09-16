@@ -36,6 +36,7 @@ async function getArray(mdata) {
   if(req.query.todolistId  != null && req.query.todolistId  != ''){
      query = query.find({todolist:req.query.todolistId})
   }
+  query = query.find({done:false})
   try {
      const tasks = await query
                              .populate('user')  

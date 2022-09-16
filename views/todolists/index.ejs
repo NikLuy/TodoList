@@ -6,7 +6,9 @@
     <div class="card p-2 mt-2">
         <div class="d-flex">
             <div class="col-md-11 ">
-                <%=todolist.name %>
+                <h5><a href="/todolists/<%= todolist.id %>">
+                    <%=todolist.name %>
+                </a></h5>
             </div>
             <div class="col-md-1 d-flex g-0 ">
                 <a href="/todolists/<%= todolist.id %>/edit" class="btn btn-primary btn-sm">
