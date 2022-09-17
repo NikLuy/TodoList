@@ -1,3 +1,15 @@
-<% if(locals.errorMessage != null){%>
-    <%= errorMessage %>
+<% if(locals.messages && messages.error){%>
+    <div class="alert alert-danger" role="alert">
+        <%= messages.error %>
+    </div>
+<%}%>
+<% if(locals.errorMsg != null){%>
+    <div class="alert alert-danger" role="alert">
+        <%= errorMsg %>
+    </div>
+<%}%>
+<% if(locals.successMsg != null){%>
+    <div class="alert alert-success" role="alert">
+        <%= successMsg %>
+    </div>
 <%}%>

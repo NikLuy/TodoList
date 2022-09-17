@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const machine = require('./machine');
+const todolist = require('./todolist');
 const user = require('./user');
 
 const taskSchema = new mongoose.Schema({
@@ -16,10 +16,10 @@ const taskSchema = new mongoose.Schema({
         required: true,
         ref:'User'
     },
-    machine:{
+    todolist:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref:'Machine'
+        ref:'TodoList'
     },
     done: {
         type: Boolean,
