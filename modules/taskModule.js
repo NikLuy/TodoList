@@ -1,12 +1,13 @@
 const Task = require('../models/task')
 const User = require('../models/user')
-const Machines = require('../models/machine')
+const TodoLists = require('../models/todolist')
 // const { param } = require("../routes/tasks");
 
 async function getArray(mdata) {
     //this gives an object with dates as keys
+    console.log(mdata)
    const groups = mdata.reduce((groups, t) => {
-     const dateId= t.machine.id;
+     const dateId= t.todolist.id;
      if (!groups[dateId]) {
        groups[dateId] = [];
      }
@@ -32,23 +33,29 @@ async function getArray(mdata) {
   if(req.query.userId  != null && req.query.userId  != '' ){
      query = query.find({user:req.query.userId})
   }
-  if(req.query.machineId  != null && req.query.machineId  != ''){
-     query = query.find({machine:req.query.machineId})
+  if(req.query.todolistId  != null && req.query.todolistId  != ''){
+     query = query.find({todolist:req.query.todolistId})
   }
+  query = query.find({done:false})
   try {
      const tasks = await query
                              .populate('user')  
-                             .populate('machine')
+                             .populate('todolist')
                              .exec()
      const groupedTasks = await getArray(tasks);
      const id = req.params.id;
+     let task
+     if(id){
+      const task = await Task.findById(id)
+     }
      const users = await User.find({})
-     const machines  =await Machines.find({})
+     const todolists  =await TodoLists.find({})
      const params = {
         groupedTasks:groupedTasks,
         searchOptions:req.query,
         users:users,
-        machines:machines,
+        todolists:todolists,
+        task:task,
         idTask: id
      }
     return params;
@@ -58,7 +65,7 @@ async function getArray(mdata) {
       groupedTasks,
       searchOptions,
       users,
-      machines,
+      todolists,
       idTask
    }
  }

@@ -1,11 +1,6 @@
 <h2 class="page-header">Search Tasks</h2>
-<div class="todo-list-item">
-    <form action="/" method="GET">
-        <%- include('../partials/tasksSearch.ejs')%>
-        <div class="form-row form-row-end">
-            <button class="btn btn-primary" type="submit">Search</button>
-        </div>
-    </form>
+    <%- include('_formSearch', {url: `/`, submitBtnText:'Search', collapsBtnText:'Search Task'})%>
+    <%- include('_form_fields', {url: `/`, submitBtnText:'Add', collapsBtnText:'Add Task'})%>
 </div>
 <br>
 <%- include('../partials/groupedTasks.ejs')%>

@@ -1,0 +1,21 @@
+<h2 class="page-header"><%= locals.title ? title : 'Listen Übersicht'%></h2>
+<%- include('_formSearch', {url: `/todolists`, submitBtnText:'Search', collapsBtnText:'Search Lists'})%>
+<%- include('_form_fields', {url: `/todolists`, submitBtnText:'Add', collapsBtnText:'Add List'})%>
+<br>
+<% todolists.forEach(todolist => {%>
+    <div class="card p-2 mt-2">
+        <div class="d-flex">
+            <div class="col-md-11 ">
+                <h5><a href="/todolists/<%= todolist.id %>">
+                    <%=todolist.name %>
+                </a></h5>
+            </div>
+            <div class="col-md-1 d-flex g-0 ">
+                <a href="/todolists/<%= todolist.id %>/edit" class="btn btn-primary btn-sm">
+                    <span class="fas fa-edit form-item"></span>
+                </a>
+                <%- include('../partials/deleteForm.ejs', {url: `/todolists/${todolist.id}`}); %>
+            </div>
+        </div>
+    </div>
+<% }) %>

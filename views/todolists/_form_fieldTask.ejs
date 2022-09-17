@@ -20,16 +20,14 @@
             </div>
             <div class="col-sm-3">
                 <label for="todolistId">Maschine</label>
-                <select class="form-control" name="todolist" >
-                    <option  value=""></option>
-                <% todolists.forEach(todolist => { %>
-                    <option <%= (locals.task && task.todolist && todolist.id === task.todolist.id) ? 'selected' : '' %> value="<%= todolist.id %>"><%= todolist.name %> </option>
-                <%  }); %>
+                <select class="form-control" name="todolist">
+                    <option  value="<%= todolist.id %>"><%= locals.todolist ? todolist.name: '??'%></option>
                 </select>
             </div>
             <div class="col-sm-1">
                 <button  class="btn btn-success mt-4" type="submit"><%= submitBtnText %></button>
             </div>
+        </div>
         </form>
     </div>
 </div>

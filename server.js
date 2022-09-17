@@ -12,7 +12,7 @@ const methodOverride = require('method-override')
 
 // const indexRouter = require('./routes/index')
 const taskRouter = require('./routes/tasks')
-const machineRouter = require('./routes/machines')
+const todolistRouter = require('./routes/todolists')
 const userRouter = require('./routes/users')
 
 app.set('view engine', 'ejs')
@@ -31,7 +31,7 @@ db.on('error', error=> console.error(error))
 db.once('open', ()=> console.log('Connected to Mongoose'))
 
 // app.use('/', indexRouter)
-app.use('/machines', machineRouter)
+app.use('/todolists', todolistRouter)
 app.use('/users', userRouter)
 app.use('/', taskRouter)
 

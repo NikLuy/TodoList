@@ -1,8 +1,36 @@
 <h2 class="page-header">Edit User</h2>
-<form action="/users/<%= user.id %>?_method=PUT" method="post">
-    <%- include('_form_fields')  %> 
-    <div class="form-row form-row-end btn-row">
-        <a class="btn btn-danger" href="/users/">Cancel</a>
-        <button class="btn btn-primary" type="submit">Edit</button>
+<div class="card row">
+    <div class="form-group row">
+        <div class="col-sm-6">
+        <label for="firstname">First name</label>
+        <input type="text" class="form-control" readonly value="<%= locals.user != null ? user.firstname:'' %>" placeholder="First name">
+        </div>
+        <div class="col-sm-6">
+        <label for="lastname">Last name</label>
+        <input type="text" class="form-control" readonly value="<%= locals.user != null ? user.lastname :'' %>" placeholder="Last name">
+        </div>
     </div>
-</form>
+    <div class="form-group row">
+        <div class="col-sm-10">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" readonly value="<%= locals.user != null ? user.email :'' %>" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="col-sm-2">
+        <label for="initials">Initials*</label>
+        <input type="text" class="form-control" readonly value="<%= locals.user != null ? user.initials :'' %>" placeholder="Initials">
+        </div>
+    </div>
+    <div class="form-group row mb-2"><!-- remove class d-none to show -->
+        <div class="col-sm-12">
+            <label for="password ">Password*</label>  
+            <input type="password" class="form-control" readonly value="1234" placeholder="Password">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <%- include('_form_fields', {url: `/users/${user.id}?_method=PUT`, submitBtnText:'Save', collapsBtnText:'Edit User'})%>
+    <div class="col-sm-2">
+        <a class="btn btn-danger mt-3 mb-1" href="/users/">Cancel</a>
+    </div>
+</div>
+
